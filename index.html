@@ -4,8 +4,11 @@
   <meta charset="UTF-8">
   <title>Анимация 3D модели LR7</title>
 
-  <!-- Подключаем model-viewer -->
+  <!-- Подключаем model-viewer и postprocessing -->
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <script type="module">
+    import '@google/model-viewer/dist/postprocessing.min.js';
+  </script>
 
   <style>
     body {
@@ -21,9 +24,6 @@
     model-viewer {
       width: 600px;
       height: 500px;
-
-      /* Эффект насыщенности цветов */
-      filter: saturate(1.8) contrast(1.2) brightness(1.1);
     }
 
     /* Стили кнопки AR */
@@ -40,12 +40,26 @@
       border-radius: 4px;
       cursor: pointer;
     }
+
+    /* Стили для панели управления эффектами */
+    .controls {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.8);
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    .controls div {
+      margin-bottom: 4px;
+    }
   </style>
 </head>
 <body>
 
 <model-viewer
-  id="model"
+  id="effectsViewer"
   src="LR7.glb"
   ios-src="LR7.usdz"
   camera-controls
@@ -57,13 +71,44 @@
 
   <!-- Кнопка AR -->
   <button slot="ar-button">Посмотреть в AR</button>
+
+  <!-- Эффекты пост-обработки -->
+  <effect-composer render-mode="quality">
+    <outline-effect color="blue" blend-mode="skip"></outline-effect>
+    <ssao-effect blend-mode="skip"></ssao-effect>
+    <glitch-effect blend-mode="skip"></glitch-effect>
+    <smaa-effect blend-mode="skip"></smaa-effect>
+    <bloom-effect blend-mode="skip"></bloom-effect>
+    <pixelate-effect granularity="5" blend-mode="skip"></pixelate-effect>
+    <color-grade-effect blend-mode="default"></color-grade-effect>
+  </effect-composer>
+
+  <!-- Панель управления эффектами -->
+  <div class="controls glass">
+    <div><input type="checkbox" id="outline"><label for="outline">Outline Effect</label></div>
+    <div><input type="checkbox" id="ssao"><label for="ssao">SSAO Effect</label></div>
+    <div><input type="checkbox" id="glitch"><label for="glitch">Glitch Effect</label></div>
+    <div><input type="checkbox" id="smaa"><label for="smaa">SMAA Effect</label></div>
+    <div><input type="checkbox" id="bloom"><label for="bloom">Bloom Effect</label></div>
+    <div><input type="checkbox" id="pixelate"><label for="pixelate">Pixelate Effect</label></div>
+    <div><input type="checkbox" id="colorgrade" checked><label for="colorgrade">Color Grade Effect</label></div>
+  </div>
 </model-viewer>
 
-<script>
-  const model = document.querySelector("#model");
+<script type="module">
+  const model = document.querySelector("#effectsViewer");
+  const effects = model.querySelector("effect-composer").children;
+  const inputs = model.querySelectorAll("input");
 
+  // Связываем чекбоксы с эффектами
+  for (let i = 0; i < effects.length; i++) {
+    inputs[i].addEventListener('change', (e) => {
+      effects[i].blendMode = e.target.checked ? 'default' : 'skip';
+    });
+  }
+
+  // Автозапуск анимации и плавный переход на "Танец"
   model.addEventListener("load", () => {
-    // Через 3 секунды переключаем анимацию на "Танец" с плавным переходом
     setTimeout(() => {
       model.animationName = "Танец";
       model.play({
