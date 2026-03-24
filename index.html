@@ -2,65 +2,68 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>AR Модель ЛР6</title>
+<<<<<<< HEAD
 
-  <!-- Подключаем библиотеку model-viewer -->
+=======
+  <title>Анимация 3D модели</title>
+
   <script type="module"
-          src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
+    src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
+>>>>>>> 8f1da5c (Добавил HTML и модель с анимациями)
   </script>
 
   <style>
     body {
       margin: 0;
-      overflow: hidden;
+<<<<<<< HEAD
+      
+=======
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #eeeeee;
+>>>>>>> 8f1da5c (Добавил HTML и модель с анимациями)
       font-family: Arial, sans-serif;
     }
 
     model-viewer {
-      width: 100vw;
-      height: 100vh;
-      background-color: #f2f2f2;
-    }
-
-    button[slot="ar-button"] {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 12px 20px;
-      font-size: 16px;
-      background-color: #1976d2;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-
-    button[slot="ar-button"]:hover {
-      background-color: #125ea8;
+<<<<<<< HEAD
+     
+=======
+      width: 600px;
+      height: 500px;
+>>>>>>> 8f1da5c (Добавил HTML и модель с анимациями)
     }
   </style>
 </head>
 <body>
 
 <model-viewer
-    src="LR6.glb"
-    ios-src="LR6.usdz"
-    ar
-    ar-modes="webxr scene-viewer quick-look"
-    camera-controls
-    auto-rotate
-    shadow-intensity="1"
-    ar-scale="auto"
-    alt="3D модель ЛР6">
-
-    <!-- КНОПКА ДЛЯ ПРОСМОТРА В AR -->
-    <button slot="ar-button">
-        📱 Смотреть в AR
-    </button>
-
+<<<<<<< HEAD
+   
+=======
+  id="model"
+  src="LR7.glb"
+  camera-controls
+  autoplay
+  animation-name="Приветствие">
 </model-viewer>
+
+<script>
+  const model = document.querySelector("#model");
+
+  model.addEventListener("load", () => {
+    setTimeout(() => {
+      model.animationName = "Танец";
+      model.play({
+        repetitions: Infinity,
+        crossfadeDuration: 1000
+      });
+    }, 5000);
+  });
+</script>
 
 </body>
 </html>
+>>>>>>> 8f1da5c (Добавил HTML и модель с анимациями)
