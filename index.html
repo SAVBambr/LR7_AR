@@ -41,12 +41,12 @@
       cursor: pointer;
     }
 
-    /* Стили для панели управления эффектами */
+    /* Панель управления эффектами */
     .controls {
       position: absolute;
       top: 20px;
       right: 20px;
-      background: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.9);
       padding: 10px;
       border-radius: 6px;
       font-size: 14px;
@@ -74,24 +74,16 @@
 
   <!-- Эффекты пост-обработки -->
   <effect-composer render-mode="quality">
-    <outline-effect color="blue" blend-mode="skip"></outline-effect>
-    <ssao-effect blend-mode="skip"></ssao-effect>
-    <glitch-effect blend-mode="skip"></glitch-effect>
-    <smaa-effect blend-mode="skip"></smaa-effect>
-    <bloom-effect blend-mode="skip"></bloom-effect>
-    <pixelate-effect granularity="5" blend-mode="skip"></pixelate-effect>
+    <bloom-effect blend-mode="default"></bloom-effect>
     <color-grade-effect blend-mode="default"></color-grade-effect>
+    <vignette-effect blend-mode="default"></vignette-effect>
   </effect-composer>
 
   <!-- Панель управления эффектами -->
   <div class="controls glass">
-    <div><input type="checkbox" id="outline"><label for="outline">Outline Effect</label></div>
-    <div><input type="checkbox" id="ssao"><label for="ssao">SSAO Effect</label></div>
-    <div><input type="checkbox" id="glitch"><label for="glitch">Glitch Effect</label></div>
-    <div><input type="checkbox" id="smaa"><label for="smaa">SMAA Effect</label></div>
-    <div><input type="checkbox" id="bloom"><label for="bloom">Bloom Effect</label></div>
-    <div><input type="checkbox" id="pixelate"><label for="pixelate">Pixelate Effect</label></div>
-    <div><input type="checkbox" id="colorgrade" checked><label for="colorgrade">Color Grade Effect</label></div>
+    <div><input type="checkbox" id="bloom" checked><label for="bloom">Bloom</label></div>
+    <div><input type="checkbox" id="colorgrade" checked><label for="colorgrade">Color Grade</label></div>
+    <div><input type="checkbox" id="vignette" checked><label for="vignette">Vignette</label></div>
   </div>
 </model-viewer>
 
@@ -100,7 +92,7 @@
   const effects = model.querySelector("effect-composer").children;
   const inputs = model.querySelectorAll("input");
 
-  // Связываем чекбоксы с эффектами
+  // Привязка чекбоксов к эффектам
   for (let i = 0; i < effects.length; i++) {
     inputs[i].addEventListener('change', (e) => {
       effects[i].blendMode = e.target.checked ? 'default' : 'skip';
