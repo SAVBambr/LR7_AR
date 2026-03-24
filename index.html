@@ -14,44 +14,16 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background: #ffffff;
+      background: #ffffff; /* белый фон */
       font-family: Arial, sans-serif;
     }
 
-    .model-wrapper {
-      position: relative;
+    model-viewer {
       width: 600px;
       height: 500px;
-      overflow: hidden;
-    }
-
-    model-viewer {
-      width: 100%;
-      height: 100%;
 
       /* Эффект насыщенности цветов */
       filter: saturate(1.8) contrast(1.2) brightness(1.1);
-      display: block;
-    }
-
-    /* Шум / Grain */
-    .model-wrapper::after {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="f"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" result="t"/></filter><rect width="100%" height="100%" filter="url(%23f)" /></svg>');
-      background-size: cover;
-      opacity: 0.1;
-      animation: noiseAnim 0.2s infinite;
-      mix-blend-mode: overlay;
-    }
-
-    @keyframes noiseAnim {
-      0% { transform: translate(0,0); }
-      50% { transform: translate(-5%,5%); }
-      100% { transform: translate(0,0); }
     }
 
     /* Стили кнопки AR */
@@ -72,27 +44,26 @@
 </head>
 <body>
 
-<div class="model-wrapper">
-  <model-viewer
-    id="model"
-    src="LR7.glb"
-    ios-src="LR7.usdz"
-    camera-controls
-    autoplay
-    animation-name="Приветствие"
-    ar
-    ar-modes="webxr scene-viewer quick-look"
-    alt="3D модель LR7">
+<model-viewer
+  id="model"
+  src="LR7.glb"
+  ios-src="LR7.usdz"
+  camera-controls
+  autoplay
+  animation-name="Приветствие"
+  ar
+  ar-modes="webxr scene-viewer quick-look"
+  alt="3D модель LR7">
 
-    <!-- Кнопка AR -->
-    <button slot="ar-button">Посмотреть в AR</button>
-  </model-viewer>
-</div>
+  <!-- Кнопка AR -->
+  <button slot="ar-button">Посмотреть в AR</button>
+</model-viewer>
 
 <script>
   const model = document.querySelector("#model");
 
   model.addEventListener("load", () => {
+    // Через 3 секунды переключаем анимацию на "Танец" с плавным переходом
     setTimeout(() => {
       model.animationName = "Танец";
       model.play({
