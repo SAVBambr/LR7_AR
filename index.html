@@ -2,10 +2,12 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Анимация 3D модели</title>
+  <title>Анимация 3D модели LR7</title>
 
-  <script type="module"
-    src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
+  <!-- Подключаем model-viewer и post-processing -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <script type="module">
+    import '@google/model-viewer/dist/postprocessing.min.js';
   </script>
 
   <style>
@@ -15,7 +17,7 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background: #eeeeee;
+      background: #222222; /* тёмный фон, чтобы эффекты были заметны */
       font-family: Arial, sans-serif;
     }
 
@@ -51,7 +53,13 @@
   animation-name="Приветствие"
   ar
   ar-modes="webxr scene-viewer quick-look"
-  alt="3D модель LR7">
+  alt="3D модель LR7"
+  post-processing
+  bloom-intensity="1.3"
+  depth-of-field="true"
+  vignette="0.6"
+  chromatic-aberration="0.2"
+  exposure="1.1">
 
   <!-- Кнопка AR -->
   <button slot="ar-button">Посмотреть в AR</button>
@@ -61,6 +69,7 @@
   const model = document.querySelector("#model");
 
   model.addEventListener("load", () => {
+    // Через 5 секунд переключаем анимацию с плавным переходом
     setTimeout(() => {
       model.animationName = "Танец";
       model.play({
@@ -73,4 +82,3 @@
 
 </body>
 </html>
-
