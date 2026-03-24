@@ -2,8 +2,6 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-
-
   <title>Анимация 3D модели</title>
 
   <script type="module"
@@ -22,9 +20,23 @@
     }
 
     model-viewer {
-     
       width: 600px;
       height: 500px;
+    }
+
+    /* Стили кнопки AR */
+    button[slot="ar-button"] {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 0.5em 1em;
+      font-size: 16px;
+      background-color: #1976d2;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -33,9 +45,16 @@
 <model-viewer
   id="model"
   src="LR7.glb"
+  ios-src="LR7.usdz"
   camera-controls
   autoplay
-  animation-name="Приветствие">
+  animation-name="Приветствие"
+  ar
+  ar-modes="webxr scene-viewer quick-look"
+  alt="3D модель LR7">
+
+  <!-- Кнопка AR -->
+  <button slot="ar-button">Посмотреть в AR</button>
 </model-viewer>
 
 <script>
